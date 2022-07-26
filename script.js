@@ -26,38 +26,35 @@ function playRound(playerSelection, computerSelection) {
         result = true;
     }
 
-    /*if (result) {
-        return `You Win! ${player} beats ${comp}`;
-    } else {
-        return `You Lose! ${comp} beats ${player}`;
-    }*/
-
     return result;
 }
 
-function game() {
-    let player = 0;
-    let comp = 0;
+let playerScore = 0;
+let compScore = 0;
+let round = 1;
 
-    let round = 1;
-    for (let i = 0; i < 5; i++) {
-        let choice = prompt("What do you choose?");
-        let result = playRound(choice, getComputerChoice())
+function game(choice) {
+
+    
+    let result = playRound(choice, getComputerChoice())
         
-        if (result) {
-            player++;
-            round++;
-            console.log("You win!")
-            console.log(`The Score is Player: ${player} Computer: ${comp}`);
-            continue;
-        } else {
-            comp++;
-            round++;
-            console.log("You lose");
-            console.log(`The Score is Player: ${player} Computer: ${comp}`);
-            continue;
-        }
-    }
+    if (result) {
+        playerScore++;
+        round++;
+        console.log("You win!")
+        console.log(`The Score is Player: ${playerScore} Computer: ${compScore}`);
+    } else {
+        compScore++;
+        round++;
+        console.log("You lose");
+        console.log(`The Score is Player: ${playerScore} Computer: ${compScore}`);
+    } 
 }
 
-game();
+const btns = document.querySelectorAll('.btn');
+
+btns.forEach(btn => {
+    btn.addEventListener('click', function(event){
+        game(btn.textContent)
+     });
+});
