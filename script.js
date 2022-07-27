@@ -33,22 +33,63 @@ let playerScore = 0;
 let compScore = 0;
 let round = 1;
 
-function game(choice) {
+const roundDisplay = document.querySelector('.round');
+const commentary = document.querySelector('.commentary');
+const finalResults = document.querySelector('.final');
+const results = document.querySelector('.results');
 
+
+function game(choice) {
+    let result = false;
+    if (playerScore == 5 || compScore == 5) {
+        return;
+    } else {
+        result = playRound(choice, getComputerChoice());
+    }
     
-    let result = playRound(choice, getComputerChoice())
         
     if (result) {
         playerScore++;
         round++;
-        console.log("You win!")
-        console.log(`The Score is Player: ${playerScore} Computer: ${compScore}`);
+        roundDisplay.textContent = `Round ${round}`;
+        commentary.textContent = `The Score is Player: ${playerScore} \n Computer: ${compScore}`;
     } else {
         compScore++;
         round++;
-        console.log("You lose");
-        console.log(`The Score is Player: ${playerScore} Computer: ${compScore}`);
+        roundDisplay.textContent = `Round ${round}`;
+        commentary.textContent = `The Score is Player: ${playerScore} \n Computer: ${compScore}`;
     } 
+    if (playerScore == 5) {
+        finalResults.textContent = "YOU WIN!";
+        const tryAgain = document.createElement('button');
+        tryAgain.textContent = "Try Again";
+        tryAgain.addEventListener('click', function(event) {
+            round = 0;
+            playerScore = 0;
+            compScore = 0;
+            finalResults.textContent = "";
+            commentary.textContent = "";
+            roundDisplay.textContent = "Round 1";
+            results.removeChild(tryAgain);
+        });
+        results.appendChild(tryAgain);
+
+    }
+    if (compScore == 5) {
+        finalResults.textContent = "YOU LOSE";
+        const tryAgain = document.createElement('button');
+        tryAgain.textContent = "Try Again";
+        tryAgain.addEventListener('click', function(event) {
+            round = 0;
+            playerScore = 0;
+            compScore = 0;
+            finalResults.textContent = "";
+            commentary.textContent = "";
+            roundDisplay.textContent = "Round 1";
+            results.removeChild(tryAgain);
+        });
+        results.appendChild(tryAgain);
+    }
 }
 
 const btns = document.querySelectorAll('.btn');
