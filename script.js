@@ -15,15 +15,17 @@ function playRound(playerSelection, computerSelection) {
     let result = true;
 
     if (player === comp) {
-        return "Tie!";
+        return null;
     } else if (player == "rock" && comp == "paper") {
         result = false;
     } else if (player == "scissors" && comp == "rock") {
         result = false;
     } else if (player == "paper" && comp == "scissors") {
         result = false;
+    } else if (player == comp) {
+        result = null;
     } else {
-        result = true;
+        return result;
     }
 
     return result;
@@ -53,12 +55,14 @@ function game(choice) {
         round++;
         roundDisplay.textContent = `Round ${round}`;
         commentary.textContent = `The Score is Player: ${playerScore} \n Computer: ${compScore}`;
-    } else {
+    } else if (!result){
         compScore++;
         round++;
         roundDisplay.textContent = `Round ${round}`;
         commentary.textContent = `The Score is Player: ${playerScore} \n Computer: ${compScore}`;
-    } 
+    } else {
+        commentary.textContent = `Tie! \n The Score is Player: ${playerScore} \n Computer: ${compScore}`;
+    }
     if (playerScore == 5) {
         finalResults.textContent = "YOU WIN!";
         const tryAgain = document.createElement('button');
@@ -96,6 +100,8 @@ const btns = document.querySelectorAll('.btn');
 
 btns.forEach(btn => {
     btn.addEventListener('click', function(event){
-        game(btn.textContent)
+        if (playerScore != 5 && compScore != 5) {
+            game(btn.textContent)
+        }
      });
 });
